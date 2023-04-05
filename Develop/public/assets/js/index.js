@@ -12,6 +12,8 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
+
+//show & hide functions show or hide the html element*******
 // Show an element
 const show = (elem) => {
   elem.style.display = 'inline';
@@ -25,6 +27,8 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
+
+// functions that are useing the Fetch API to send HTTP requests to the server to get, save, and delete the notes
 const getNotes = () =>
   fetch('/api/notes', {
     method: 'GET',
@@ -50,6 +54,7 @@ const deleteNote = (id) =>
     },
   });
 
+  //  updating the active note in the text area
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
@@ -66,6 +71,8 @@ const renderActiveNote = () => {
   }
 };
 
+
+// functions to handle events related to saving, deleting, viewing, and creating new notes
 const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
@@ -108,6 +115,8 @@ const handleNewNoteView = (e) => {
   renderActiveNote();
 };
 
+
+// function that shows or hides the save note button depending on whether the note title and text inputs are empty or not.
 const handleRenderSaveBtn = () => {
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);
@@ -116,7 +125,7 @@ const handleRenderSaveBtn = () => {
   }
 };
 
-// Render the list of note titles
+// Render the list of note titles in the sidebar
 const renderNoteList = async (notes) => {
   let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
