@@ -1,3 +1,5 @@
+console.log("script activated")
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
@@ -29,22 +31,26 @@ let activeNote = {};
 
 
 // functions that are useing the Fetch API to send HTTP requests to the server to get, save, and delete the notes
-const getNotes = () =>
-  fetch('/api/notes', {
+const getNotes = async () =>{
+  let notes 
+  await fetch('/api/notes', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  }).then(data=> data.json().then(res=> notes = res));
+return notes
+}
 
-const saveNote = (note) =>
-  fetch('/api/notes', {
+const saveNote = async (note) =>{
+  console.log(note)
+    fetch('/api/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
-  });
+  });}
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -127,7 +133,8 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles in the sidebar
 const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+  console.log(notes)
+  let jsonNotes = notes;
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
@@ -180,7 +187,10 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndRenderNotes = async () =>{
+  let notes = await getNotes()
+  renderNoteList(notes)
+}
 
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
