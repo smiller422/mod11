@@ -5,7 +5,8 @@ const fs = require("fs")
 const data = require('./db/db.json')
 console.log(data)
 
-const PORT = 3001;
+// const PORT = 3001;
+const PORT = process.env.PORT || 3001
 
 const app = express();
 
