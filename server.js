@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require("fs")
 // const data = require('.. /../../db/db.json') //needs space after first set of double dots
-const data = require('../Develop/db/db.json')
+const data = require('./db/db.json')
 console.log(data)
 
 const PORT = 3001;

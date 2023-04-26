@@ -6,6 +6,8 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+
+
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -51,6 +53,12 @@ const saveNote = async (note) =>{
     },
     body: JSON.stringify(note),
   });}
+
+  const uuid = require('./uuid');
+  function generateUniqueId() {
+    const uniqueId = uuidv4(); // Generates a random UUID
+  return uniqueId;
+}
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
