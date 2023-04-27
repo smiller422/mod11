@@ -1,5 +1,7 @@
 console.log("script activated")
 
+
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;

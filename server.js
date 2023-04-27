@@ -3,9 +3,9 @@ const path = require('path');
 const fs = require("fs")
 // const data = require('.. /../../db/db.json') //needs space after first set of double dots
 const dataPath = require('./db/db.json')
-const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+// const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
 
-console.log(data)
+
 
 // const PORT = 3001;
 const PORT = process.env.PORT || 3001
@@ -32,19 +32,23 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
+
+//get route for notes data
 app.get('/api/notes', (req, res) => {
   console.log('youre hitting api notes');
-  const updatedData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-  res.json(updatedData);
+  const notesData = fs.readFileSync(dataPath, 'utf8');
+  const parsedNotesData = JSON.parse(notesData);
+  res.json(parsedNotesData);
 });
 
+//post route to add a new note
 app.post('/api/notes', (req, res) => {
-  let note = req.body;
+  const note = req.body;
 
   // Read notes data from file
-  fs.readFile(dataPath, 'utf8', (err, notesData) => {
-    if (err) throw err;
-    let parsedNotesData = JSON.parse(notesData);
+   const notesData = fs.readFileSync(dataPath, 'utf8');
+    const parsedNotesData = JSON.parse(notesData); 
+
 
     // Add a new note
     note.id = parsedNotesData.length + 1;
@@ -53,12 +57,12 @@ app.post('/api/notes', (req, res) => {
     // Update notes data in the file
     fs.writeFile(dataPath, JSON.stringify(parsedNotesData), (err) => {
       if (err) throw err;
-      console.log('The file has been saved!');
+      console.log('The notes been saved!');
 
       // Send the updated notes data as a response
       res.json(parsedNotesData);
     });
   });
-});
 
+  
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT} 🚀`));
