@@ -56,11 +56,11 @@ const saveNote = async (note) =>{
     body: JSON.stringify(note),
   });}
 
-  const uuid = require('./uuid');
-  function generateUniqueId() {
-    const uniqueId = uuidv4(); // Generates a random UUID
-  return uniqueId;
-}
+//   const uuid = require('./uuid');
+//   function generateUniqueId() {
+//     const uniqueId = uuidv4(); // Generates a random UUID
+//   return uniqueId;
+// }
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {

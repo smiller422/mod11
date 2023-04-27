@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const fs = require("fs")
 // const data = require('.. /../../db/db.json') //needs space after first set of double dots
-const dataPath = require('./db/db.json')
+const dataPath = './db/db.json'
 // const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
-
+const { v4: uuidv4 } = require('uuid');
 
 
 // const PORT = 3001;
@@ -34,7 +34,7 @@ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes
 
 
 //get route for notes data
-app.get('/api/notes', (req, res) => {
+app.get('/api/notes',  (req, res) => {
   console.log('youre hitting api notes');
   const notesData = fs.readFileSync(dataPath, 'utf8');
   const parsedNotesData = JSON.parse(notesData);
@@ -51,8 +51,9 @@ app.post('/api/notes', (req, res) => {
 
 
     // Add a new note
-    note.id = parsedNotesData.length + 1;
+    note.id = uuidv4();
     parsedNotesData.push(note);
+   
 
     // Update notes data in the file
     fs.writeFile(dataPath, JSON.stringify(parsedNotesData), (err) => {
